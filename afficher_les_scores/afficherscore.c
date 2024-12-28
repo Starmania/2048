@@ -1,4 +1,9 @@
 #include <stdio.h>
-int main (void){
-    return 0;
+#include <stdlib.h>
+    int *tabscore;
+    int nbpartie=0;
+    tabscore=malloc(sizeof (int)*nbpartie);
+void supprimerScore() {
+free(tabscore);
+    printf("Tout les scores ont été supprimés.\n");
 }
