@@ -12,15 +12,7 @@ int main(void) {
     if (tabscore == NULL) {
         fprintf(stderr, "Erreur d'allocation mémoire\n");
         return 1;
-    }
-
-    for (i = 0; i < nbjoueur; i++) {
-        printf("Entrez le score du joueur %d : ", i + 1);
-        scanf("%d", &tabscore[i]);
-    }
-    
-    int tab[nbjoueur];
-        
+    }        
     printf("| ");
     for(int i = 0; i < nbjoueur; i++){
         printf("   joueur %d   | ", i+1);}
