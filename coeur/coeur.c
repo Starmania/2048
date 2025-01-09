@@ -8,12 +8,12 @@
 void initializeGrid(int grid[SIZE][SIZE]);
 void displayGrid(int grid[SIZE][SIZE]);
 int getNextNonZero(int row[SIZE], int index);
-void slideRowLeft(int row[SIZE]);
-void spawnTile(int grid[SIZE][SIZE]);
-void moveLeft(int grid[SIZE][SIZE]);
-void moveRight(int grid[SIZE][SIZE]);
-void moveUp(int grid[SIZE][SIZE]);
-void moveDown(int grid[SIZE][SIZE]);
+int slideRowLeft(int row[SIZE]);
+int spawnTile(int grid[SIZE][SIZE]);
+int moveLeft(int grid[SIZE][SIZE]);
+int moveRight(int grid[SIZE][SIZE]);
+int moveUp(int grid[SIZE][SIZE]);
+int moveDown(int grid[SIZE][SIZE]);
 int canMove(int grid[SIZE][SIZE]);
 int getRandomCaseNumber();
 void reverseRow(int row[SIZE]);
@@ -24,6 +24,7 @@ int main()
     int grid[SIZE][SIZE];
     char move;
     int gameOver = 0;
+    int score = 0;
 
     srand(time(NULL));
 
@@ -35,8 +36,8 @@ int main()
     grid[2][2] = 4444;
 
     // Ajoute deux cases au démarrage
-    // spawnTile(grid);
-    // spawnTile(grid);
+    // score += spawnTile(grid);
+    // score += spawnTile(grid);
 
     while (!gameOver)
     {
@@ -50,16 +51,16 @@ int main()
         switch (move)
         {
         case 'z':
-            moveUp(grid);
+            score += moveUp(grid);
             break;
         case 'q':
-            moveLeft(grid);
+            score += moveLeft(grid);
             break;
         case 's':
-            moveDown(grid);
+            score += moveDown(grid);
             break;
         case 'd':
-            moveRight(grid);
+            score += moveRight(grid);
             break;
         // case 't':
         //     transposeGrid(grid);
@@ -71,16 +72,16 @@ int main()
         //     }
         //     break;
         default:
-            printf("Invalid move. Try again.\n");
+            printf("Move invalide\n");
             continue;
         }
 
-        // spawnTile(grid);
+        // score += spawnTile(grid);
 
         if (!canMove(grid))
         {
             gameOver = 1;
-            printf("Game Over! No more moves possible.\n");
+            printf("Game Over! Score: %d\n", score);
         }
     }
 
@@ -107,8 +108,20 @@ void displayGrid(int grid[SIZE][SIZE])
     printf("\n");
 }
 
+int getRandomCaseNumber()
+{
+    if (rand() % 10)
+    { // 9 chances sur 10 que la case soit 2, sinon 4
+        return 2;
+    }
+    else
+    {
+        return 4;
+    }
+}
+
 // Faire apparaître une case de manière aléatoire
-void spawnTile(int grid[SIZE][SIZE])
+int spawnTile(int grid[SIZE][SIZE])
 {
     int empty[SIZE * SIZE][2];
     int count = 0;
@@ -133,19 +146,9 @@ void spawnTile(int grid[SIZE][SIZE])
         int x = empty[r][0];
         int y = empty[r][1];
         grid[x][y] = getRandomCaseNumber();
+        return grid[x][y];
     }
-}
-
-int getRandomCaseNumber()
-{
-    if (rand() % 10)
-    { // 9 chances sur 10 que la case soit 2, sinon 4
-        return 2;
-    }
-    else
-    {
-        return 4;
-    }
+    return 0;
 }
 
 // Retourne le premier index à partir de `index` avec une valeur différente de 0
@@ -165,8 +168,9 @@ int getNextNonZero(int row[SIZE], int index)
     return i;
 }
 
-void slideRowLeft(int row[SIZE])
+int slideRowLeft(int row[SIZE])
 {
+    int score = 0;
     for (size_t i = 0; i < SIZE; i++)
     {
         int movedObject = getNextNonZero(row, i);
@@ -178,6 +182,7 @@ void slideRowLeft(int row[SIZE])
         {
             row[movedObject] *= 2;
             row[addedObject] = 0;
+            score += row[movedObject];
         }
         if (i != movedObject)
         {
@@ -185,6 +190,7 @@ void slideRowLeft(int row[SIZE])
             row[movedObject] = 0;
         }
     }
+    return score;
 }
 
 void reverseRow(int row[SIZE])
@@ -213,38 +219,46 @@ void transposeGrid(int grid[SIZE][SIZE])
     }
 }
 
-void moveLeft(int grid[SIZE][SIZE])
+int moveLeft(int grid[SIZE][SIZE])
 {
+    int score = 0;
     for (size_t i = 0; i < SIZE; i++)
     {
-        slideRowLeft(grid[i]);
+        score += slideRowLeft(grid[i]);
     }
+    return score;
 }
 
-void moveRight(int grid[SIZE][SIZE])
+int moveRight(int grid[SIZE][SIZE])
 {
+    int score = 0;
     for (size_t i = 0; i < SIZE; i++)
     {
         reverseRow(grid[i]);
-        slideRowLeft(grid[i]);
+        score += slideRowLeft(grid[i]);
         reverseRow(grid[i]);
     }
+    return score;
 }
 
-void moveUp(int grid[SIZE][SIZE])
+int moveUp(int grid[SIZE][SIZE])
 {
+    int score = 0;
     transposeGrid(grid);
+    score += moveLeft(grid);
     printf("Transposed:\n");
     displayGrid(grid);
-    moveLeft(grid);
     transposeGrid(grid);
+    return score;
 }
 
-void moveDown(int grid[SIZE][SIZE])
+int moveDown(int grid[SIZE][SIZE])
 {
+    int score = 0;
     transposeGrid(grid);
     moveRight(grid);
     transposeGrid(grid);
+    return score;
 }
 
 int canMove(int grid[SIZE][SIZE])
