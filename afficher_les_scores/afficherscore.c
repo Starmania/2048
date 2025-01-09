@@ -1,43 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-    int *tabscore;
-    int nbpartie=0;
-    tabscore=malloc(sizeof (int)*nbpartie);
-void supprimerScore() {
-free(tabscore);
-    printf("Tout les scores ont été supprimés.\n");
-}
-#include <stdio.h>
 
-void afficherTableau(int lignes, int colonnes) {
-    int i, j;
+#define SIZE 10
 
-    // Afficher la première ligne du tableau
-    for (j = 0; j < colonnes; j++) {
-        printf("+---");
-    }
-    printf("+\n");
-
-    // Afficher les lignes intermédiaires du tableau
-    for (i = 0; i < lignes; i++) {
-        for (j = 0; j < colonnes; j++) {
-            printf("|   ");
-        }
-        printf("|\n");
-
-        // Afficher les lignes de séparation
-        for (j = 0; j < colonnes; j++) {
-            printf("+---");
-        }
-        printf("+\n");
-    }
-}
-
-int main() {
-    int lignes = 2; // Nombre de lignes du tableau
-    int colonnes = 5; // Nombre de colonnes du tableau
-
-    afficherTableau(lignes, colonnes);
-
+int main(void){
+    int tab[SIZE];
+    for(int i = 0; i < SIZE; i++)
+        tab[i] = i*7;
+        
+    printf("| ");
+    for(int i = 0; i < SIZE; i++){
+        printf("   joueur %d   | ", i+1);}
+    printf("\n| ");
+    
+    for(int i = 0; i < SIZE; i++)
+        printf("%10d    | ", tab[i]);
+    
     return 0;
 }
