@@ -77,8 +77,6 @@ int main()
 
         // spawnTile(grid);
 
-        slideRowLeft(grid[0]);
-
         if (!canMove(grid))
         {
             gameOver = 1;
