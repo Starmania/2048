@@ -238,4 +238,19 @@ void moveDown(int grid[SIZE][SIZE])
 
 int canMove(int grid[SIZE][SIZE])
 {
+    for (size_t i = 0; i < SIZE; i++)
+    {
+        for (size_t j = 0; j < SIZE; j++)
+        {
+            if (grid[i][j] == 0)
+                return 1; // Il reste des cases vides
+
+            if (i < SIZE - 1 && grid[i][j] == grid[i + 1][j])
+                return 1; // Il reste des cases adjacentes horizontalement
+
+            if (j < SIZE - 1 && grid[i][j] == grid[i][j + 1])
+                return 1; // Il reste des cases adjacentes verticalement
+        }
+    }
+    return 0;
 }
