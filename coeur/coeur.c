@@ -16,6 +16,8 @@ void moveUp(int grid[SIZE][SIZE]);
 void moveDown(int grid[SIZE][SIZE]);
 int canMove(int grid[SIZE][SIZE]);
 int getRandomCaseNumber();
+void reverseRow(int row[SIZE]);
+void transposeGrid(int grid[SIZE][SIZE]);
 
 int main()
 {
@@ -59,6 +61,15 @@ int main()
         case 'd':
             moveRight(grid);
             break;
+        // case 't':
+        //     transposeGrid(grid);
+        //     break;
+        // case 'r':
+        //     for (size_t i = 0; i < SIZE; i++)
+        //     {
+        //         reverseRow(grid[i]);
+        //     }
+        //     break;
         default:
             printf("Invalid move. Try again.\n");
             continue;
@@ -82,7 +93,7 @@ void initializeGrid(int grid[SIZE][SIZE])
 {
     for (int i = 0; i < SIZE; i++)
         for (int j = 0; j < SIZE; j++)
-            grid[i][j] = 0;
+            grid[i][j] = 0; // SIZE * i + j + 1;
 }
 
 void displayGrid(int grid[SIZE][SIZE])
@@ -195,9 +206,11 @@ void transposeGrid(int grid[SIZE][SIZE])
     {
         for (size_t j = i + 1; j < SIZE; j++)
         {
+            // printf("i: %zu, j: %zu\n", i, j);
             int temp = grid[i][j];
             grid[i][j] = grid[j][i];
             grid[j][i] = temp;
+            // displayGrid(grid);
         }
     }
 }
