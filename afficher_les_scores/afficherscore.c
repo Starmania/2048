@@ -1,20 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
+int main(void) {
+    int *tabscore;
+    int nbjoueur;
+    int i;
 
-#define SIZE 10
+    printf("Combien de joueurs êtes-vous : ");
+    scanf("%d", &nbjoueur);
 
-int main(void){
-    int tab[SIZE];
-    for(int i = 0; i < SIZE; i++)
-        tab[i] = i*7;
+    tabscore = (int *)calloc(nbjoueur, sizeof(int));
+    if (tabscore == NULL) {
+        fprintf(stderr, "Erreur d'allocation mémoire\n");
+        return 1;
+    }
+
+    for (i = 0; i < nbjoueur; i++) {
+        printf("Entrez le score du joueur %d : ", i + 1);
+        scanf("%d", &tabscore[i]);
+    }
+    
+    int tab[nbjoueur];
         
     printf("| ");
-    for(int i = 0; i < SIZE; i++){
+    for(int i = 0; i < nbjoueur; i++){
         printf("   joueur %d   | ", i+1);}
     printf("\n| ");
     
-    for(int i = 0; i < SIZE; i++)
-        printf("%10d    | ", tab[i]);
+    for(int i = 0; i < nbjoueur; i++)
+        printf("%10d    | ", tabscore[i]);
     
+    free(tabscore);
+
     return 0;
 }
