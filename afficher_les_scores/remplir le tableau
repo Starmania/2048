@@ -1,0 +1,5 @@
+int remplirtableau (int nbjoueur, int *tabscore) {
+    tabscore[nbjoueur]=score
+    
+    return 0;
+}
