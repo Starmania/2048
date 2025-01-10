@@ -1,18 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-int resetscore(int *tabscore,int nbjoueur) { 
-    int i;
-    for(i=0;i<nbjoueur;i++){
-        tabscore[i]=0;
-    }
-    printf("les scores ont été rénitialisés.");
-    return 0;
-}
-int remplirtableau (int nbjoueur, int *tabscore) {
-    tabscore[nbjoueur]=score
-    
-    return 0;
-}
 int main(void) {
     int *tabscore;
     int nbjoueur;
