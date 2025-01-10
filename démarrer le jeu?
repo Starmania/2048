@@ -1,0 +1,26 @@
+int decision(char choix) {
+    printf("que souhaitez vous faire :\n");
+    printf("(d)émarrer le jeu\n(a)fficher les scores\n(e)ffacer les scores\n(q)uitter\n");
+    printf("Entrez la première lettre de votre choix en minuscule : ");
+    scanf(" %c", &choix);
+
+    switch (choix) {
+        case 'd':
+            printf("Démarrage du jeu\n");
+            exit(0);
+            break;
+        case 'a':
+            affichagetab();
+            break;
+        case 'e':
+            resetscore(tabscore, nbjoueur);
+            break;
+        case 'q':
+            printf("Jeu fini\n");
+            exit(0);
+        default:
+            printf("Erreur, choix impossible\n");
+    }
+
+    return 0;
+}
