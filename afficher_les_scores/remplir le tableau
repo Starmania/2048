@@ -1,5 +1,5 @@
-int remplirtableau (int nbjoueur, int *tabscore) {
+void remplirtab(int nbjoueur, int *tabscore, int score, int joueur);
+
+void remplirtableau (int nbjoueur, int *tabscore) {
     tabscore[nbjoueur]=score
-    
-    return 0;
 }
