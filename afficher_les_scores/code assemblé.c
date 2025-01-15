@@ -47,11 +47,6 @@ int decision(char choix) {
                 fprintf(stderr, "Erreur d'allocation mémoire\n");
                 return 1;
             }
-            for (int i = 0; i < nbjoueur; i++) {
-                printf("Combien de points a eu %s : ", tabpseudo[i]);
-                scanf("%d", &score);
-                remplirtab(nbjoueur, tabscore, score, i);
-            }
                     classement(tabscore, nbjoueur);
                         printf("Démarrage du jeu...\n");
                         printf("Le score a battre est %d\n",scoremax);
