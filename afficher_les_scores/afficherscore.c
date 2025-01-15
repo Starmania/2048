@@ -1,4 +1,6 @@
-int affichagetab() {
+void affichagetab();
+
+void affichagetab() {
     int i;
     printf("| ");
     for (i = 0; i < nbjoueur; i++) {
@@ -10,7 +12,5 @@ int affichagetab() {
         printf("%10d    | ", tabscore[i]);
     }
     printf("\n");
-
-    return 0;
 }
 
