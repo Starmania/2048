@@ -2,18 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "config.h"
-
-void initializeGrid(int grid[SIZE][SIZE]);
-void displayGrid(int grid[SIZE][SIZE]);
-int spawnTile(int grid[SIZE][SIZE]);
-int moveLeft(int grid[SIZE][SIZE]);
-int moveRight(int grid[SIZE][SIZE]);
-int moveUp(int grid[SIZE][SIZE]);
-int moveDown(int grid[SIZE][SIZE]);
-int canMove(int grid[SIZE][SIZE]);
-// For debugging
-// void reverseRow(int row[SIZE]);
-// void transposeGrid(int grid[SIZE][SIZE]);
+#include "tableau.h"
 
 /*
 int main()
@@ -25,7 +14,7 @@ int main()
 
     srand(time(NULL));
 
-    initializeGrid(grid);
+    initialiserTableau(grid);
 
     grid[2][1] = 1111;
     grid[2][2] = 2222;
@@ -38,7 +27,7 @@ int main()
 
     while (!gameOver)
     {
-        displayGrid(grid);
+        afficherTableau(grid);
 
         printf("Enter move (z/q/s/d): ");
         scanf(" %c", &move);
@@ -48,16 +37,16 @@ int main()
         switch (move)
         {
         case 'z':
-            score += moveUp(grid);
+            score += mouvementHaut(grid);
             break;
         case 'q':
-            score += moveLeft(grid);
+            score += mouvementGauche(grid);
             break;
         case 's':
-            score += moveDown(grid);
+            score += mouvementBas(grid);
             break;
         case 'd':
-            score += moveRight(grid);
+            score += mouvementDroite(grid);
             break;
         // case 't':
         //     transposeGrid(grid);
@@ -75,7 +64,7 @@ int main()
 
         // score += spawnTile(grid);
 
-        if (0 && !canMove(grid))
+        if (0 && !mouvementPossible(grid))
         {
             gameOver = 1;
             printf("Game Over! Score: %d\n", score);
@@ -85,26 +74,9 @@ int main()
     return 0;
 }
 */
-void initializeGrid(int grid[SIZE][SIZE])
-{
-    for (int i = 0; i < SIZE; i++)
-        for (int j = 0; j < SIZE; j++)
-            grid[i][j] = 0; // SIZE * i + j + 1;
-}
 
-void displayGrid(int grid[SIZE][SIZE])
-{
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            printf("|%4d", grid[i][j]);
-        }
-        printf("|\n");
-    }
-    printf("\n");
-}
-
+// Retourne un nombre aléatoire entre 2 et 4
+// Il y a 9 chances sur 10 que le nombre soit 2
 int getRandomCaseNumber()
 {
     if (rand() % 10)
@@ -148,11 +120,11 @@ int spawnTile(int grid[SIZE][SIZE])
     return 0;
 }
 
-// Retourne le premier index à partir de `index` avec une valeur différente de 0
+// Retourne le premier index à partir de `indexDeDebut` avec une valeur différente de 0
 // Si pas d'autre objet, retourne -1
-int getNextNonZero(int row[SIZE], int index)
+int getNextNonZero(int row[SIZE], int indexDeDebut)
 {
-    int i = index;
+    int i = indexDeDebut;
     int found = 0;
     for (; i < SIZE; i++)
         if (row[i] != 0)
@@ -165,6 +137,10 @@ int getNextNonZero(int row[SIZE], int index)
     return i;
 }
 
+// La fonction la plus importante
+// Elle fait glisser les objets vers la gauche
+// Elle fusionne les objets identiques
+// Elle retourne le score des fusions
 int slideRowLeft(int row[SIZE])
 {
     int score = 0;
@@ -211,12 +187,12 @@ void transposeGrid(int grid[SIZE][SIZE])
             int temp = grid[i][j];
             grid[i][j] = grid[j][i];
             grid[j][i] = temp;
-            // displayGrid(grid);
+            // afficherTableau(grid);
         }
     }
 }
 
-int moveLeft(int grid[SIZE][SIZE])
+int mouvementGauche(int grid[SIZE][SIZE])
 {
     int score = 0;
     for (size_t i = 0; i < SIZE; i++)
@@ -226,7 +202,7 @@ int moveLeft(int grid[SIZE][SIZE])
     return score;
 }
 
-int moveRight(int grid[SIZE][SIZE])
+int mouvementDroite(int grid[SIZE][SIZE])
 {
     int score = 0;
     for (size_t i = 0; i < SIZE; i++)
@@ -238,26 +214,28 @@ int moveRight(int grid[SIZE][SIZE])
     return score;
 }
 
-int moveUp(int grid[SIZE][SIZE])
+int mouvementHaut(int grid[SIZE][SIZE])
 {
     int score = 0;
     transposeGrid(grid);
-    score += moveLeft(grid);
+    score += mouvementGauche(grid);
     transposeGrid(grid);
     return score;
 }
 
-int moveDown(int grid[SIZE][SIZE])
+int mouvementBas(int grid[SIZE][SIZE])
 {
     int score = 0;
     transposeGrid(grid);
-    moveRight(grid);
+    score += mouvementDroite(grid);
     transposeGrid(grid);
     return score;
 }
 
-int canMove(int grid[SIZE][SIZE])
+int mouvementPossible(int grid[SIZE][SIZE])
 {
+    // size_t car on ne varie que dans [0...SIZE-1], pas besoin de valeurs négatives
+    // Sinon ça se comporte comme un int avec un maxi plus grand que int
     for (size_t i = 0; i < SIZE; i++)
     {
         for (size_t j = 0; j < SIZE; j++)
@@ -265,6 +243,7 @@ int canMove(int grid[SIZE][SIZE])
             if (grid[i][j] == 0)
                 return 1; // Il reste des cases vides
 
+            // i < SIZE - 1 pour éviter de sortir du tableau
             if (i < SIZE - 1 && grid[i][j] == grid[i + 1][j])
                 return 1; // Il reste des cases adjacentes horizontalement
 
