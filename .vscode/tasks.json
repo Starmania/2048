@@ -7,13 +7,14 @@
                 "command": "/usr/bin/g++"
             },
             "osx": {
-                "command": "/usr/bin/g++"
+                "command": "/usr/bin/gcc"
             },
-            "command": "g++",
+            "command": "gcc",
             "args": [
                 "-x",
                 "c",
                 "-fdiagnostics-color=always",
+                // "-O0",
                 "-g",
                 "${file}",
                 "-o",
