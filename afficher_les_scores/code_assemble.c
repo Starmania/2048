@@ -8,14 +8,6 @@ char **tabpseudo = NULL;
 int score;
 int scoremax;
 
-// Prototypes des fonctions
-int resetscore(int *tabscore, int nbjoueur);
-int remplirtab(int nbjoueur, int *tabscore, int score, int joueur);
-int decision(char choix);
-int affichagetab();
-int demanderPseudos(int nbjoueur, char ***tabpseudo);
-void classement(int *tabscore, int nbjoueur);
-
 int resetscore(int *tabscore, int nbjoueur)
 {
     for (int i = 0; i < nbjoueur; i++)

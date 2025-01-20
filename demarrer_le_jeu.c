@@ -1,4 +1,17 @@
-int decision(char choix);
+#include <stdio.h>
+#include <stdlib.h>
+
+char tabpseudo[255][4];
+int *tabscore[255];
+int nbjoueur;
+int score;
+int scoremax;
+
+void remplirtableau(int nbjoueur, int *tabscore);
+int remplirtab(int nbjoueur, int *tabscore, int score, int joueur);
+int demanderPseudos(int nbjoueur, char ***tabpseudo);
+void classement(int *tabscore, int nbjoueur);
+
 int decision(char choix)
 {
     printf("Voulez-vous démarrer le jeu :\n");
@@ -15,7 +28,7 @@ int decision(char choix)
         {
             printf("Erreur lors de la demande des pseudos.\n");
         }
-        tabscore = realloc(tabscore, nbjoueur * sizeof(int));
+        int *tabscore = realloc(tabscore, nbjoueur * sizeof(int));
         if (tabscore == NULL)
         {
             fprintf(stderr, "Erreur d'allocation mémoire\n");

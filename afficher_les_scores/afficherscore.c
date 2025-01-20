@@ -1,4 +1,6 @@
 void affichagetab();
+int nbjoueur;
+int tabscore[];
 
 void affichagetab()
 {

@@ -1,23 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string.h>
 
 #define SIZE 4
 
 void initializeGrid(int grid[SIZE][SIZE]);
 void displayGrid(int grid[SIZE][SIZE]);
-int getNextNonZero(int row[SIZE], int index);
-int slideRowLeft(int row[SIZE]);
 int spawnTile(int grid[SIZE][SIZE]);
 int moveLeft(int grid[SIZE][SIZE]);
 int moveRight(int grid[SIZE][SIZE]);
 int moveUp(int grid[SIZE][SIZE]);
 int moveDown(int grid[SIZE][SIZE]);
 int canMove(int grid[SIZE][SIZE]);
-int getRandomCaseNumber();
-void reverseRow(int row[SIZE]);
-void transposeGrid(int grid[SIZE][SIZE]);
+// For debugging
+// void reverseRow(int row[SIZE]);
+// void transposeGrid(int grid[SIZE][SIZE]);
 
 int main()
 {
@@ -30,10 +27,10 @@ int main()
 
     initializeGrid(grid);
 
-    grid[1][1] = 1111;
-    grid[1][2] = 2222;
-    grid[2][1] = 3333;
-    grid[2][2] = 4444;
+    grid[2][1] = 1111;
+    grid[2][2] = 2222;
+    grid[3][1] = 3333;
+    grid[3][2] = 4444;
 
     // Ajoute deux cases au démarrage
     // score += spawnTile(grid);
@@ -78,7 +75,7 @@ int main()
 
         // score += spawnTile(grid);
 
-        if (!canMove(grid))
+        if (0 && !canMove(grid))
         {
             gameOver = 1;
             printf("Game Over! Score: %d\n", score);
@@ -246,8 +243,6 @@ int moveUp(int grid[SIZE][SIZE])
     int score = 0;
     transposeGrid(grid);
     score += moveLeft(grid);
-    printf("Transposed:\n");
-    displayGrid(grid);
     transposeGrid(grid);
     return score;
 }
