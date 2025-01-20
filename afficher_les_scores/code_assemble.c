@@ -124,6 +124,37 @@ void classement(int *tabscore, int nbjoueur)
 }
 int main(void)
 {
+    // 1. Initialiser les variables
+
+    // [-] Démarrage de la boucle principale
+
+    // 2. Afficher le menu
+
+    // 3. Lire le choix de l'utilisateur
+
+    // 3.1. Si l'utilisateur veut démarrer le jeu
+    // 3.1.1. Demander le pseudo du joueur
+    // 3.1.2. Initialiser le score du joueur à 0
+    // 3.1.3. Lancer le jeu
+    // 3.1.4. Demander le nom du joueur
+    // 3.1.5. Mettre à jour le score du joueur
+    // 3.1.6. Revenir à l'étape 2
+
+    // 3.2 Si l'utilisateur veut afficher les scores
+    // 3.2.1. Afficher les scores
+    // 3.2.2. Revenir à l'étape 2
+
+    // 3.3. Si l'utilisateur veut réinitialiser les scores
+    // 3.3.1. Réinitialiser les scores
+    // 3.3.2. Revenir à l'étape 2
+
+    // 3.4. Si l'utilisateur veut quitter
+    // 3.4.1. Quitter le programme
+
+    // 3.5. Si le choix n'est pas valide
+    // 3.5.1. Afficher un message d'erreur
+    // 3.5.2. Revenir à l'étape 2
+
     char choix;
 
     while (1)
