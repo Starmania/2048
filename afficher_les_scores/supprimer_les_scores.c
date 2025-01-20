@@ -1,5 +1,3 @@
-void resetscore(int *tabscore, int nbjoueur);
-
 void resetscore(int *tabscore, int nbjoueur)
 {
     int i;

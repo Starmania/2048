@@ -1,8 +1,4 @@
-void affichagetab();
-int nbjoueur;
-int tabscore[];
-
-void affichagetab()
+void affichagetab(int *tabscore, int nbjoueur)
 {
     int i;
     printf("| ");

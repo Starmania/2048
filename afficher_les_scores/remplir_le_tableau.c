@@ -1,7 +1,4 @@
-void remplirtab(int nbjoueur, int *tabscore, int score, int joueur);
-int score;
-
-void remplirtableau(int nbjoueur, int *tabscore)
+void remplirtableau(int nbjoueur, int *tabscore, int score)
 {
     tabscore[nbjoueur] = score;
 }
