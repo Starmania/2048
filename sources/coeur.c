@@ -16,6 +16,7 @@ int canMove(int grid[SIZE][SIZE]);
 // void reverseRow(int row[SIZE]);
 // void transposeGrid(int grid[SIZE][SIZE]);
 
+/*
 int main()
 {
     int grid[SIZE][SIZE];
@@ -84,7 +85,7 @@ int main()
 
     return 0;
 }
-
+*/
 void initializeGrid(int grid[SIZE][SIZE])
 {
     for (int i = 0; i < SIZE; i++)
