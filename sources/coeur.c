@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-#define SIZE 4
+#include "config.h"
 
 void initializeGrid(int grid[SIZE][SIZE]);
 void displayGrid(int grid[SIZE][SIZE]);
