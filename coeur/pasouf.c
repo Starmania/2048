@@ -7,8 +7,8 @@ int ajouterNom(char ***noms, int *taille, char *nom)
     char **noms_nouveau = realloc(*noms, (*taille + 1) * sizeof(char *));
     if (!noms_nouveau)
     {
-        fprintf(stderr, "Memory allocation failed\n");
-        return 1;
+        fprintf(stderr, "Erreur d'allocation mémoire\n");
+        exit(1);
     }
     *noms = noms_nouveau;
     (*noms)[*taille] = nom;
@@ -16,7 +16,7 @@ int ajouterNom(char ***noms, int *taille, char *nom)
     return 0;
 }
 
-int enleverTousLesNoms(char ***noms, int *taille)
+int enleverPseudos(char ***noms, int *taille)
 {
     for (int i = 0; i < *taille; i++)
     {
@@ -41,7 +41,7 @@ int tester(char ***noms, int *taille)
     printf("Taille: %d\n", *taille);
 
     // Enlève tous les noms
-    enleverTousLesNoms(noms, taille);
+    enleverPseudos(noms, taille);
 
     printf("Taille: %d\n", *taille);
 }

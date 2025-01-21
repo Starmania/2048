@@ -1,41 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "demande_le_pseudo_des_joueurs.h"
 
-int demanderPseudos(int nbjoueur, char **tabpseudo)
+void enleverPseudos(char ***tabpseudo, int *nbjoueur)
+{
+    for (int i = 0; i < *nbjoueur; i++)
+    {
+        free((*tabpseudo)[i]);
+    }
+    free(*tabpseudo);
+    *tabpseudo = NULL;
+    *nbjoueur = 0;
+}
+
+int ajouterPseudo(char ***tabpseudo, int *nbjoueur, char *nom)
+{
+    char **noms_nouveau = realloc(*tabpseudo, (*nbjoueur + 1) * sizeof(char *));
+    if (!noms_nouveau)
+    {
+        fprintf(stderr, "Erreur d'allocation mémoire\n");
+        exit(1);
+    }
+    *tabpseudo = noms_nouveau;
+    (*tabpseudo)[*nbjoueur] = nom;
+    (*nbjoueur)++;
+    return 0;
+}
+
+// Pourquoi passer un pointeur sur nbjoueur et un triple pointeur sur tabpseudo ?
+// Cela permet de modifier les valeurs de nbjoueur et tabpseudo dans la fonction
+// Et tabpseudo est un double pointeur car c'est un tableau de pointeurs
+// Car on ne connait pas à l'avance le nombre de joueurs
+// On ne peut pas allouer un tableau de taille fixe
+int demanderPseudos(int *nbjoueur, char ***tabpseudo)
 {
     if (nbjoueur <= 0)
     {
-        fprintf(stderr, "Erreur, le nombre de joueur doit être supérieur à 0\n");
-        return 1;
+        fprintf(stderr, "[DEPR] Le nombre de joueurs doit être supérieur à 0\n");
+        enleverPseudos(tabpseudo, nbjoueur);
+        return 0;
     }
 
-    char pseudo[4];
-    int size = nbjoueur;
-    char **tabpseudo_nouveau = realloc(tabpseudo, nbjoueur * sizeof(char *));
-    if (!tabpseudo_nouveau)
-    {
-        fprintf(stderr, "Erreur d'allocation mémoire\n");
-        return 1;
-    }
-    tabpseudo = tabpseudo_nouveau;
-
-    printf("Joueur %d, donnez votre pseudo de 3 lettres : ", nbjoueur);
+    char *pseudo = malloc(4 * sizeof(char));
+    printf("Joueur %d, donnez votre pseudo de 3 lettres : ", *nbjoueur + 1);
     scanf("%3s", pseudo);
     fflush(stdin); // Vide les caractères restants si le pseudo est plus long que 3 caractères
 
-    tabpseudo[nbjoueur - 1] = malloc(4 * sizeof(char));
-    if (!tabpseudo[nbjoueur - 1])
+    if (ajouterPseudo(tabpseudo, nbjoueur, pseudo))
     {
-        fprintf(stderr, "Erreur d'allocation mémoire\n");
-        for (int k = 0; k < nbjoueur - 1; k++)
-        {
-            free(tabpseudo[k]);
-        }
-        free(tabpseudo);
-        return 1;
+        printf("[demanderPseudos] Erreur lors de l'ajout du pseudo\n");
+        exit(1);
     }
-    strcpy(tabpseudo[nbjoueur - 1], pseudo); // copie le pseudo du joueur dans un tableau
     return 0;
 }
 
@@ -48,19 +64,24 @@ int main()
         fprintf(stderr, "Erreur d'allocation mémoire\n");
         return 1;
     }
-    tabpseudo[0] = "PIX";
-    tabpseudo[1] = "JUL";
+    // Pouquoi strdup ?
+    // strdup alloue de la mémoire pour une chaîne de caractères et copie la chaîne passée en argument
+    // Cela permet de ne pas avoir à faire malloc
+    tabpseudo[0] = strdup("PIX");
+    tabpseudo[1] = strdup("JUL");
 
-    if (demanderPseudos(nbjoueur + 1, tabpseudo) != 0)
+    if (demanderPseudos(&nbjoueur, &tabpseudo) != 0)
     {
         fprintf(stderr, "Erreur lors de la demande des pseudos.\n");
         return 1;
     }
 
-    for (int i = 0; i < nbjoueur + 1; i++)
+    for (int i = 0; i < nbjoueur; i++)
     {
         printf("Joueur %d : %s\n", i + 1, tabpseudo[i]);
     }
+
+    enleverPseudos(&tabpseudo, &nbjoueur);
 
     return 0;
 }

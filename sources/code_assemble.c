@@ -1,30 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "afficherscore.h"
+#include "demande_le_pseudo_des_joueurs.h"
+#include "supprimer_les_scores.h"
+#include "meilleur_score.h"
+#include "remplir_le_tableau.h"
+#include "tableau.h"
+#include "coeur.h"
 
-int nbjoueur = 0;
-int *tabscore = NULL;
-char **tabpseudo = NULL;
-int score;
-int scoremax;
-
-int resetscore(int *tabscore, int nbjoueur)
-{
-    for (int i = 0; i < nbjoueur; i++)
-    {
-        tabscore[i] = 0;
-    }
-    printf("Les scores ont été réinitialisés.\n");
-    return 0;
-}
-
-int remplirtab(int nbjoueur, int *tabscore, int score, int joueur)
-{
-    tabscore[joueur] = score;
-    return 0;
-}
-
-int decision(char choix)
+int decision(char choix, int *nbjoueur, int **tabscore, char ***tabpseudo)
 {
     printf("Voulez-vous démarrer le jeu :\n");
     printf("(o)ui\n(a)fficher les scores\n(e)ffacer les scores\n(q)uitter\n");
@@ -36,28 +21,35 @@ int decision(char choix)
     case 'o':
         printf("Démarrage du jeu.\n");
         nbjoueur += 1;
-        if (demanderPseudos(nbjoueur, &tabpseudo) != 0)
+        if (demanderPseudos(nbjoueur, tabpseudo) != 0)
         {
             printf("Erreur lors de la demande des pseudos.\n");
+            exit(1);
         }
-        tabscore = realloc(tabscore, nbjoueur * sizeof(int));
+        tabscore = realloc(tabscore, *nbjoueur * sizeof(int));
         if (tabscore == NULL)
         {
             fprintf(stderr, "Erreur d'allocation mémoire\n");
-            return 1;
+            exit(1);
         }
-        classement(tabscore, nbjoueur);
+        int scoremax = 0;
+        if (*nbjoueur > 1)
+            scoremax = *tabscore[classement(*tabscore, *nbjoueur)];
+
         printf("Démarrage du jeu...\n");
         printf("Le score a battre est %d\n", scoremax);
         break;
     case 'a':
-        affichagetab();
+        affichagetab(*tabscore, *nbjoueur);
         break;
     case 'e':
-        resetscore(tabscore, nbjoueur);
+        resetscore(*tabscore, *nbjoueur); // TODO: ""
         break;
     case 'q':
-        classement(tabscore, nbjoueur);
+        scoremax = 0;
+        if (*nbjoueur > 1)
+            scoremax = *tabscore[classement(*tabscore, *nbjoueur)];
+        classement(*tabscore, *nbjoueur);
         printf("Jeu fini\n");
         printf("le meilleure score était %d\n", scoremax);
         exit(0);
@@ -68,60 +60,6 @@ int decision(char choix)
     return 0;
 }
 
-int affichagetab()
-{
-    printf("| ");
-    for (int i = 0; i < nbjoueur; i++)
-    {
-        printf("      %3s      | ", tabpseudo[i]);
-    }
-    printf("\n| ");
-
-    for (int i = 0; i < nbjoueur; i++)
-    {
-        printf("%10d     | ", tabscore[i]);
-    }
-    printf("\n");
-
-    return 0;
-}
-
-int demanderPseudos(int nbjoueur, char ***tabpseudo)
-{
-    char pseudo[4];
-    *tabpseudo = realloc(*tabpseudo, nbjoueur * sizeof(char *));
-    if (*tabpseudo == NULL)
-    {
-        fprintf(stderr, "Erreur d'allocation mémoire\n");
-        return 1;
-    }
-
-    printf("Joueur %d, donnez votre pseudo de 3 lettres : ", nbjoueur);
-    scanf("%3s", pseudo);
-    (*tabpseudo)[nbjoueur - 1] = malloc(4 * sizeof(char));
-    if ((*tabpseudo)[nbjoueur - 1] == NULL)
-    {
-        fprintf(stderr, "Erreur d'allocation mémoire\n");
-        for (int k = 0; k < nbjoueur - 1; k++)
-        {
-            free((*tabpseudo)[k]);
-        }
-        free(*tabpseudo);
-        return 1;
-    }
-    strcpy((*tabpseudo)[nbjoueur - 1], pseudo);
-    return 0;
-}
-void classement(int *tabscore, int nbjoueur)
-{
-    for (int i = 0; i < nbjoueur; i++)
-    {
-        if (tabscore[i] > scoremax)
-        {
-            scoremax = tabscore[i];
-        }
-    }
-}
 int main(void)
 {
     // 1. Initialiser les variables
@@ -155,11 +93,17 @@ int main(void)
     // 3.5.1. Afficher un message d'erreur
     // 3.5.2. Revenir à l'étape 2
 
+    int nbjoueur = 0;
+    int *tabscore = NULL;
+    char **tabpseudo = NULL;
+    int score;
+    int scoremax;
+
     char choix;
 
     while (1)
     {
-        decision(choix);
+        decision(choix, &nbjoueur, &tabscore, &tabpseudo);
     }
 
     // Libérer la mémoire allouée

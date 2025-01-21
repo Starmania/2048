@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "meilleur_score.h"
 
 int classement(int *tabscore, int nbjoueur)
 {

@@ -32,7 +32,7 @@ int decision(char choix)
         if (tabscore == NULL)
         {
             fprintf(stderr, "Erreur d'allocation mémoire\n");
-            return 1;
+            exit(1);
         }
         for (int i = 0; i < nbjoueur; i++)
         {
