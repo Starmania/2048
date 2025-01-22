@@ -55,6 +55,7 @@ int demanderPseudos(int *nbjoueur, char ***tabpseudo)
     return 0;
 }
 
+/*
 int main()
 {
     int nbjoueur = 2;
@@ -85,3 +86,4 @@ int main()
 
     return 0;
 }
+*/

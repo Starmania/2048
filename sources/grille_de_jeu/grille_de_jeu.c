@@ -3,6 +3,7 @@
 #include "config.h"
 #include "grille_de_jeu.h"
 
+/*
 int main()
 {
     int mat[SIZE][SIZE];
@@ -10,6 +11,7 @@ int main()
     afficherTableau(mat);
     return 0;
 }
+*/
 
 void afficherTableau(int tab[SIZE][SIZE])
 {

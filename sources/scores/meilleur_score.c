@@ -23,6 +23,7 @@ int classement(int *tabscore, int nbjoueur)
     return indexScoreMax;
 }
 
+/*
 int main()
 {
     int *tabscore = malloc(5 * sizeof(int));
@@ -40,3 +41,4 @@ int main()
 
     return 0;
 }
+*/
