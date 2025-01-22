@@ -9,8 +9,65 @@
 #include "grille_de_jeu/grille_de_jeu.h"
 #include "coeur.h"
 
-int decision(char choix, int *nbjoueur, int **tabscore, char ***tabpseudo)
+int jeux_decision()
 {
+    int grid[SIZE][SIZE];
+    char move;
+    int gameOver = 0;
+    int score = 0;
+
+    srand(time(NULL));
+
+    initialiserTableau(grid);
+
+    // Ajoute deux cases au démarrage
+    score += spawnTile(grid);
+    score += spawnTile(grid);
+
+    while (!gameOver)
+    {
+        afficherTableau(grid);
+
+        printf("Entrez un mouvement (z/q/s/d): ");
+        scanf(" %c", &move);
+        // fflush(stdin);
+
+        switch (move)
+        {
+        case 'z':
+            score += mouvementHaut(grid);
+            break;
+        case 'q':
+            score += mouvementGauche(grid);
+            break;
+        case 's':
+            score += mouvementBas(grid);
+            break;
+        case 'd':
+            score += mouvementDroite(grid);
+            break;
+        default:
+            printf("Move invalide\n");
+            continue;
+        }
+
+        score += spawnTile(grid);
+
+        if (!mouvementPossible(grid))
+        {
+            gameOver = 1;
+            afficherTableau(grid);
+            printf("Game Over! Score: %d\n", score);
+        }
+    }
+
+    return score;
+}
+
+int decision(int *nbjoueur, int **tabscore, char ***tabpseudo)
+{
+    char choix;
+
     printf("Voulez-vous démarrer le jeu :\n");
     printf("(o)ui\n(a)fficher les scores\n(e)ffacer les scores\n(q)uitter\n");
     printf("Entrez la première lettre de votre choix en minuscule : ");
@@ -20,30 +77,35 @@ int decision(char choix, int *nbjoueur, int **tabscore, char ***tabpseudo)
     {
     case 'o':
         printf("Démarrage du jeu.\n");
-        nbjoueur += 1;
+
         if (demanderPseudos(nbjoueur, tabpseudo) != 0)
         {
             printf("Erreur lors de la demande des pseudos.\n");
             exit(1);
         }
-        tabscore = realloc(tabscore, *nbjoueur * sizeof(int));
-        if (tabscore == NULL)
+
+        char *score_nouveau = realloc(*tabscore, *nbjoueur * sizeof(char *));
+        if (!score_nouveau)
         {
             fprintf(stderr, "Erreur d'allocation mémoire\n");
             exit(1);
         }
-        int scoremax = 0;
-        if (*nbjoueur > 1)
-            scoremax = *tabscore[classement(*tabscore, *nbjoueur)];
+        *tabscore = score_nouveau;
+        (*tabscore)[*nbjoueur - 1] = 0;
+
+        int scoremax = *tabscore[classement(*tabscore, *nbjoueur)];
 
         printf("Démarrage du jeu...\n");
         printf("Le score a battre est %d\n", scoremax);
+        int score = jeux_decision();
+        (*tabscore)[*nbjoueur - 1] = score;
         break;
     case 'a':
         affichagetab(*tabscore, *nbjoueur);
         break;
     case 'e':
-        resetscore(*tabscore, *nbjoueur); // TODO: ""
+        resetscore(*tabscore, *nbjoueur);
+        enleverPseudos(tabpseudo, nbjoueur);
         break;
     case 'q':
         scoremax = 0;
@@ -52,7 +114,7 @@ int decision(char choix, int *nbjoueur, int **tabscore, char ***tabpseudo)
         classement(*tabscore, *nbjoueur);
         printf("Jeu fini\n");
         printf("le meilleure score était %d\n", scoremax);
-        exit(0);
+        return 1;
     default:
         printf("Erreur, choix impossible\n");
     }
@@ -99,11 +161,8 @@ int main(void)
     int score;
     int scoremax;
 
-    char choix;
-
-    while (1)
+    while (!decision(&nbjoueur, &tabscore, &tabpseudo))
     {
-        decision(choix, &nbjoueur, &tabscore, &tabpseudo);
     }
 
     // Libérer la mémoire allouée
