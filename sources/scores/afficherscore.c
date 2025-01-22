@@ -6,7 +6,7 @@ void affichagetab(int *tabscore, char **tabpseudo, int *nbjoueur)
     printf("| ");
     for (i = 0; i < nbjoueur; i++)
     {
-        printf("      %3s      | ", tabpseudo[i]);
+        printf("      %3s     | ", tabpseudo[i]);
     }
     printf("\n| ");
 
