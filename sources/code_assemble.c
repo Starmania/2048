@@ -159,14 +159,13 @@ int main(void)
     int nbjoueur = 0;
     int *tabscore = NULL;
     char **tabpseudo = NULL;
-    int score;
-    int scoremax;
 
     while (!decision(&nbjoueur, &tabscore, &tabpseudo))
     {
     }
 
-    resetscore(&tabscore,&nbjoueur);
+    resetscore(&tabscore,nbjoueur);
+    nbjoueur = 0;
     
     return 0;
 }
