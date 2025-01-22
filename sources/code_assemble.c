@@ -84,7 +84,7 @@ int decision(int *nbjoueur, int **tabscore, char ***tabpseudo)
             exit(1);
         }
 
-        char *score_nouveau = realloc(*tabscore, *nbjoueur * sizeof(char *));
+        int *score_nouveau = realloc(*tabscore, *nbjoueur * sizeof(int *));
         if (!score_nouveau)
         {
             fprintf(stderr, "Erreur d'allocation mémoire\n");
@@ -165,13 +165,6 @@ int main(void)
     {
     }
 
-    // Libérer la mémoire allouée
-    free(tabscore);
-    for (int i = 0; i < nbjoueur; i++)
-    {
-        free(tabpseudo[i]);
-    }
-    free(tabpseudo);
-
+    resetscore(&tabscore,&nbjoueur)
     return 0;
 }
