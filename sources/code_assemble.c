@@ -6,7 +6,7 @@
 #include "supprimer_les_scores.h"
 #include "meilleur_score.h"
 #include "remplir_le_tableau.h"
-#include "tableau.h"
+#include "grille_de_jeu.h"
 #include "coeur.h"
 
 int decision(char choix, int *nbjoueur, int **tabscore, char ***tabpseudo)

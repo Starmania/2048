@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "config.h"
+#include "grille_de_jeu.h"
 
 int main()
 {

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "config.h"
-#include "tableau.h"
+#include "grille_de_jeu.h"
 
 /*
 int main()
