@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void affichagetab(int *tabscore, *tabpseudo, *nbjoueur)
+void affichagetab(int *tabscore, char **tabpseudo, int *nbjoueur)
 {
     int i;
     printf("| ");
