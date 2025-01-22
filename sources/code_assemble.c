@@ -165,6 +165,6 @@ int main(void)
     {
     }
 
-    resetscore(&tabscore,&nbjoueur)
+    resetscore(&tabscore,&nbjoueur);
     return 0;
 }
