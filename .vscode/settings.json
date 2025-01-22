@@ -1,1 +1,5 @@
-{}
+{
+    "files.associations": {
+        "demande_le_pseudo_des_joueurs.h": "c"
+    }
+}

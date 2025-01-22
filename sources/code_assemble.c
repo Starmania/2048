@@ -104,8 +104,9 @@ int decision(int *nbjoueur, int **tabscore, char ***tabpseudo)
         affichagetab(*tabscore, *tabpseudo, *nbjoueur);
         break;
     case 'e':
-        resetscore(*tabscore, *nbjoueur);
+        resetscore(*tabscore, nbjoueur);
         enleverPseudos(tabpseudo, nbjoueur);
+        nbjoueur = 0;
         break;
     case 'q':
         scoremax = 0;
@@ -166,5 +167,6 @@ int main(void)
     }
 
     resetscore(&tabscore,&nbjoueur);
+    
     return 0;
 }

@@ -3,15 +3,14 @@
 #include <string.h>
 #include "demande_le_pseudo_des_joueurs.h"
 
-void enleverPseudos(char ***tabpseudo, int *nbjoueur)
+void enleverPseudos(char ***tabpseudo, int nbjoueur)
 {
-    for (int i = 0; i < *nbjoueur; i++)
+    for (int i = 0; i < nbjoueur; i++)
     {
         free((*tabpseudo)[i]);
     }
     free(*tabpseudo);
     *tabpseudo = NULL;
-    *nbjoueur = 0;
 }
 
 int ajouterPseudo(char ***tabpseudo, int *nbjoueur, char *nom)
@@ -38,7 +37,8 @@ int demanderPseudos(int *nbjoueur, char ***tabpseudo)
     if (nbjoueur <= 0)
     {
         fprintf(stderr, "[DEPR] Le nombre de joueurs doit être supérieur à 0\n");
-        enleverPseudos(tabpseudo, nbjoueur);
+        enleverPseudos(tabpseudo, *nbjoueur);
+        *nbjoueur = 0;
         return 0;
     }
 
@@ -82,7 +82,8 @@ int main()
         printf("Joueur %d : %s\n", i + 1, tabpseudo[i]);
     }
 
-    enleverPseudos(&tabpseudo, &nbjoueur);
+    enleverPseudos(&tabpseudo, nbjoueur);
+    nbjoueur = 0;
 
     return 0;
 }
