@@ -15,6 +15,7 @@ int jeux_decision()
     char move;
     int gameOver = 0;
     int score = 0;
+    int ancien_score = 0;
 
     srand(time(NULL));
 
@@ -30,7 +31,7 @@ int jeux_decision()
 
         printf("Entrez un mouvement (z/q/s/d): ");
         scanf(" %c", &move);
-        // fflush(stdin);
+        fflush(stdin);
 
         switch (move)
         {
@@ -46,14 +47,21 @@ int jeux_decision()
         case 'd':
             score += mouvementDroite(grid);
             break;
+        case 'e':
+            gameOver = 1;
+            continue;
         default:
             printf("Move invalide\n");
             continue;
         }
 
-        score += spawnTile(grid);
+        if (score != ancien_score)
+        {
+            score += spawnTile(grid);
+            ancien_score = score;
+        }
 
-        if (!mouvementPossible(grid))
+        if (!mouvementPossible(grid) || gameOver)
         {
             gameOver = 1;
             afficherTableau(grid);
@@ -164,8 +172,8 @@ int main(void)
     {
     }
 
-    resetscore(&tabscore,nbjoueur);
+    resetscore(&tabscore, nbjoueur);
     nbjoueur = 0;
-    
+
     return 0;
 }
