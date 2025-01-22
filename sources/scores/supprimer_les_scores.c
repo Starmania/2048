@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 void resetscore(int *tabscore, int nbjoueur)
 {
     int i;

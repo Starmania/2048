@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 void affichagetab(int *tabscore, int nbjoueur)
 {
     int i;
