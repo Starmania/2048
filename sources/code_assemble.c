@@ -101,7 +101,7 @@ int decision(int *nbjoueur, int **tabscore, char ***tabpseudo)
         (*tabscore)[*nbjoueur - 1] = score;
         break;
     case 'a':
-        affichagetab(*tabscore, *nbjoueur);
+        affichagetab(*tabscore, *tabpseudo, *nbjoueur);
         break;
     case 'e':
         resetscore(*tabscore, *nbjoueur);

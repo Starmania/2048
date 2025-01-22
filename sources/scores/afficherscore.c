@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-void affichagetab(int *tabscore, int nbjoueur)
+void affichagetab(int *tabscore, *tabpseudo, *nbjoueur)
 {
     int i;
     printf("| ");
     for (i = 0; i < nbjoueur; i++)
     {
-        printf("   joueur %d   | ", i + 1);
+        printf("      %3s      | ", tabpseudo[i]);
     }
     printf("\n| ");
 
