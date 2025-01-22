@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "afficherscore.h"
-#include "demande_le_pseudo_des_joueurs.h"
-#include "supprimer_les_scores.h"
-#include "meilleur_score.h"
-#include "remplir_le_tableau.h"
-#include "grille_de_jeu.h"
+#include "scores/afficherscore.h"
+#include "scores/supprimer_les_scores.h"
+#include "scores/meilleur_score.h"
+#include "scores/remplir_le_tableau.h"
+#include "joueurs/demande_le_pseudo_des_joueurs.h"
+#include "grille_de_jeu/grille_de_jeu.h"
 #include "coeur.h"
 
 int decision(char choix, int *nbjoueur, int **tabscore, char ***tabpseudo)
