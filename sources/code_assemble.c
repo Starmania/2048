@@ -119,7 +119,11 @@ int decision(int *nbjoueur, int **tabscore, char ***tabpseudo)
         affichagetab(*tabscore, *tabpseudo, *nbjoueur);
         break;
     case 'e':
-        printf("");
+        if (!*nbjoueur)
+        {
+            printf("Aucun joueur n'a été enregistré\n");
+            break;
+        }
         resetscore(*tabscore, nbjoueur);
         enleverPseudos(tabpseudo, nbjoueur);
         nbjoueur = 0;
