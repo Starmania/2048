@@ -16,7 +16,7 @@ int jeux_decision()
     char move;
     int gameOver = 0;
     int score = 0;
-    char ancien_coup = "_";
+    char ancien_coup = "";
     int coup_invalide = 0;
 
     srand(time(NULL));
