@@ -15,7 +15,8 @@ int jeux_decision()
     char move;
     int gameOver = 0;
     int score = 0;
-    int ancien_score = 0;
+    char ancien_coup = "_";
+    int coup_invalide = 0;
 
     srand(time(NULL));
 
@@ -52,13 +53,14 @@ int jeux_decision()
             continue;
         default:
             printf("Move invalide\n");
+            coup_invalide =1;
             continue;
         }
 
-        if (score != ancien_score)
+        if (!strcmp(move, ancien_coup) && !coup_invalide)
         {
             score += spawnTile(grid);
-            ancien_score = score;
+            ancien_coup = move;
         }
 
         if (!mouvementPossible(grid) || gameOver)
@@ -67,6 +69,7 @@ int jeux_decision()
             afficherTableau(grid);
             printf("Game Over! Score: %d\n", score);
         }
+        coup_invalide = 0;
     }
 
     return score;
