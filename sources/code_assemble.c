@@ -19,6 +19,7 @@ int jeux_decision()
     int score = 0;
     int coup_invalide = 0;
 
+    // Initialisation du générateur de nombres aléatoires
     srand(time(NULL));
 
     initialiserTableau(grid);
@@ -29,10 +30,12 @@ int jeux_decision()
 
     while (!gameOver)
     {
+        // Affiche le tableau
         afficherTableau(grid);
 
         printf("Entrez un mouvement (z/q/s/d): ");
         scanf(" %c", &move);
+        // Vide le buffer d'entrée pour éviter d'entrer plusieurs mouvements à la fois
         fflush(stdin);
 
         switch (move)
@@ -116,6 +119,7 @@ int decision(int *nbjoueur, int **tabscore, char ***tabpseudo)
         affichagetab(*tabscore, *tabpseudo, *nbjoueur);
         break;
     case 'e':
+        printf("");
         resetscore(*tabscore, nbjoueur);
         enleverPseudos(tabpseudo, nbjoueur);
         nbjoueur = 0;

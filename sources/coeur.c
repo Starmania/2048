@@ -146,17 +146,22 @@ int slideRowLeft(int row[SIZE])
     int score = 0;
     for (size_t i = 0; i < SIZE; i++)
     {
+        // Trouve le prochain objet non nul
         int movedObject = getNextNonZero(row, i);
         if (movedObject == -1)
             break;
 
+        // Trouve le prochain objet non nul après movedObject
         int addedObject = getNextNonZero(row, movedObject + 1);
+        // Si les objets sont identiques, fusionne-les
         if (addedObject != -1 && row[movedObject] == row[addedObject])
         {
+            // Fusion de row[movedObject] et row[addedObject]
             row[movedObject] *= 2;
             row[addedObject] = 0;
             score += row[movedObject];
         }
+        // Déplace l'objet vers la gauche
         if (i != movedObject)
         {
             row[i] = row[movedObject];
