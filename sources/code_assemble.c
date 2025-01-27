@@ -14,9 +14,9 @@ int jeux_decision()
 {
     int grid[SIZE][SIZE];
     char move;
+    char ancien_coup;
     int gameOver = 0;
     int score = 0;
-    char ancien_coup = "";
     int coup_invalide = 0;
 
     srand(time(NULL));
@@ -54,11 +54,11 @@ int jeux_decision()
             continue;
         default:
             printf("Move invalide\n");
-            coup_invalide =1;
+            coup_invalide = 1;
             continue;
         }
 
-        if (!strcmp(move, ancien_coup) && !coup_invalide)
+        if (move != ancien_coup && !coup_invalide)
         {
             score += spawnTile(grid);
             ancien_coup = move;
