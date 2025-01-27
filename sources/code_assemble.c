@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "scores/afficherscore.h"
 #include "scores/supprimer_les_scores.h"
 #include "scores/meilleur_score.h"
